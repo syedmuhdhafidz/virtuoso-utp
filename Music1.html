@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Virtuoso UTP</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&display=swap" rel="stylesheet">
+    <style>
+        html { scroll-behavior: smooth; }
+        .parallax {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        .carousel-background {
+            position: absolute;
+            inset: 0;
+            background-size: cover;
+            background-position: center;
+            transition: opacity 1s ease-in-out;
+        }
+        .elegant-title {
+            font-family: 'Playfair Display', serif;
+            letter-spacing: 1px;
+        }
+    </style>
+</head>
+<body class="bg-black text-white">
+    <!-- Hero Section with Automatic Carousel -->
+    <section class="relative w-full h-screen overflow-hidden">
+        <div id="carousel" class="absolute inset-0 carousel-background parallax"></div>
+        <div class="absolute inset-0 bg-black bg-opacity-50 flex flex-col justify-center items-center text-center z-10">
+            <h1 class="text-4xl md:text-6xl font-bold elegant-title">Virtuoso Throughout 2024✨</h1>
+            <button class="mt-4 px-6 py-2 bg-white text-black rounded-full text-lg font-semibold flex items-center transition-transform duration-300 hover:scale-105">
+                ▶ Our Previous Performances
+            </button>
+        </div>
+    </section>
+
+    <!-- Countdown Timer -->
+    <section class="text-center py-10">
+        <h2 class="text-2xl font-bold">Next Event Countdown - Busking: Retro Night🎸</h2>
+        <p id="countdown" class="text-3xl font-semibold mt-2"></p>
+    </section>
+
+    <!-- Concert Events with Hover Effects -->
+    <section class="p-10">
+        <div class="grid sm:grid-cols-2 md:grid-cols-4 gap-6">
+            <div class="relative transition-transform duration-300 hover:scale-110 hover:shadow-lg">
+                <img src="vocalist.jpg" alt="Concert 1" class="w-full h-72 object-cover rounded-lg">
+                <div class="absolute bottom-0 bg-black bg-opacity-60 backdrop-blur-sm p-4 w-full">
+                    <p class="text-sm">20 November, 2024</p>
+                    <h3 class="text-lg font-bold">Jukebox Concert: Popping Rock</h3>
+                    <button class="mt-2 px-4 py-2 bg-white text-black rounded">See Pictures</button>
+                </div>
+            </div>
+            <div class="relative transition-transform duration-300 hover:scale-110 hover:shadow-lg">
+                <img src="guitar.jpg" alt="Concert 2" class="w-full h-72 object-cover rounded-lg">
+                <div class="absolute bottom-0 bg-black bg-opacity-60 backdrop-blur-sm p-4 w-full">
+                    <p class="text-sm">14 July, 2023</p>
+                    <h3 class="text-lg font-bold">Vinyl of Nusantara '23</h3>
+                </div>
+            </div>
+            <div class="relative transition-transform duration-300 hover:scale-110 hover:shadow-lg">
+                <img src="bass.jpg" alt="Concert 3" class="w-full h-72 object-cover rounded-lg">
+                <div class="absolute bottom-0 bg-black bg-opacity-60 backdrop-blur-sm p-4 w-full">
+                    <p class="text-sm">20 September, 2024</p>
+                    <h3 class="text-lg font-bold">Vinyl of Nusantara '24</h3>
+                </div>
+            </div>
+            <div class="relative transition-transform duration-300 hover:scale-110 hover:shadow-lg">
+                <img src="percs.jpg" alt="Concert 4" class="w-full h-72 object-cover rounded-lg">
+                <div class="absolute bottom-0 bg-black bg-opacity-60 backdrop-blur-sm p-4 w-full">
+                    <p class="text-sm">Annual Event</p>
+                    <h3 class="text-lg font-bold">ConvoFest '24</h3>
+                </div>
+            </div>
+        </div>
+        <div class="text-center mt-10">
+            <button class="px-6 py-2 bg-gray-800 text-white rounded-full text-lg font-semibold">
+                Contact Us →
+            </button>
+        </div>
+    </section>
+
+    <script>
+        // Automatic Carousel Script
+        const images = ["banner1.jpg", "banner2.jpg", "banner3.jpg", "banner4.jpg"];
+        let currentIndex = 0;
+        const carousel = document.getElementById("carousel");
+
+        function changeBackground() {
+            carousel.style.opacity = 0; // Fade out effect
+            setTimeout(() => {
+                carousel.style.backgroundImage = `url('${images[currentIndex]}')`;
+                carousel.style.transition = "opacity 1s ease-in-out";
+                carousel.style.opacity = 1; // Fade in effect
+                currentIndex = (currentIndex + 1) % images.length; // Loop back to first image
+            }, 1000); // 1 second fade-out transition
+        }
+
+        // Change background every 5 seconds
+        setInterval(changeBackground, 5000);
+
+        // Initialize the first image
+        carousel.style.backgroundImage = `url('${images[0]}')`;
+
+        // Countdown Timer Script
+        function startCountdown(eventDate) {
+            const countDownDate = new Date(eventDate).getTime();
+            const x = setInterval(function() {
+                const now = new Date().getTime();
+                const distance = countDownDate - now;
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                document.getElementById("countdown").innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+                if (distance < 0) {
+                    clearInterval(x);
+                    document.getElementById("countdown").innerHTML = "Event Started!";
+                }
+            }, 1000);
+        }
+        startCountdown("February 27, 2025 20:00:00");
+    </script>
+</body>
+</html>
